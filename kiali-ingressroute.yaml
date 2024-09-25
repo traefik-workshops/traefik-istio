@@ -1,0 +1,14 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kiali
+  namespace: istio-system
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`kiali.docker.localhost`)
+    kind: Rule
+    services:
+    - name: kiali
+      port: http

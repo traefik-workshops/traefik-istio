@@ -1,0 +1,26 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami
+  namespace: apps
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`whoami.docker.localhost`)
+    kind: Rule
+    middlewares:
+    - name: whoami-istio
+    services:
+    - name: whoami
+      port: 80
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: whoami-istio
+  namespace: apps
+spec:
+  headers:
+    customRequestHeaders:
+      Host: whoami.apps.svc
