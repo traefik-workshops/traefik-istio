@@ -326,9 +326,9 @@ Since the sidecar of istio contains tcpdump, we can check the traffic with those
 
 ```shell
 # On Traefik
-kubectl exec -n traefik $(kubectl get pod -n traefik  -l app=traefik  -o jsonpath='{.items..metadata.name}') -c istio-proxy -- sudo tcpdump dst port 80  -A
+kubectl exec -n traefik $(kubectl get pod -n traefik  -l app=traefik  -o jsonpath='{.items..metadata.name}') -c istio-proxy -- sudo tcpdump dst port 80 -l -A
 # On Whoami
-kubectl exec -n apps $(kubectl get pod -n apps -l app=whoami -o jsonpath='{.items..metadata.name}') -c istio-proxy -- sudo tcpdump dst port 80  -A
+kubectl exec -n apps $(kubectl get pod -n apps -l app=whoami -o jsonpath='{.items..metadata.name}') -c istio-proxy -- sudo tcpdump dst port 80 -l -A
 ```
 
 It will fail, since we didn't allow priviliged operation on the sidecar.
@@ -484,9 +484,9 @@ We can confirm with tcpdump commands on both sides that now the traffic is ciphe
 
 ```shell
 # on Traefik Proxy
-kubectl exec -n traefik $(kubectl get pod -n traefik  -l app=traefik  -o jsonpath='{.items..metadata.name}') -c istio-proxy -- sudo tcpdump dst port 80  -A
+kubectl exec -n traefik $(kubectl get pod -n traefik  -l app=traefik  -o jsonpath='{.items..metadata.name}') -c istio-proxy -- sudo tcpdump dst port 80 -l -A
 # on Whoami
-kubectl exec -n apps $(kubectl get pod -n apps -l app=whoami -o jsonpath='{.items..metadata.name}') -c istio-proxy -- sudo tcpdump dst port 80  -A
+kubectl exec -n apps $(kubectl get pod -n apps -l app=whoami -o jsonpath='{.items..metadata.name}') -c istio-proxy -- sudo tcpdump dst port 80 -l -A
 ```
 
 ## Cleanup
